@@ -18,10 +18,5 @@ module.exports = {
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
     .setDMPermission(false),
-  async execute(interaction) {
-    await interaction.reply({
-      content: "Saucisse potentiellement privée",
-      ephemeral: interaction.options.getBoolean("ephemeral"),
-    });
-  },
+  async execute(interaction) {},
 };

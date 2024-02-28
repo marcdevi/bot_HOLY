@@ -1,12 +1,13 @@
 // Import required packages & token
 const fs = require("node:fs");
 const path = require("node:path");
-const { Client, Collection, GatewayIntentBits } = require("discord.js");
+const { Client, Events, Collection, GatewayIntentBits } = require("discord.js");
 const { token } = require("./config.json");
 const Sequelize = require("sequelize");
+const Player = require("discord-player");
 
 //connexion DB
-const sequelize = new Sequelize("database", "user", "passworrd", {
+const sequelize = new Sequelize("database", "user", "password", {
   host: "localhost",
   dialect: "sqlite",
   logging: false,
@@ -59,6 +60,32 @@ client.commands = new Collection();
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
+//Lier une event et une commande
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (!interaction.isChatInputCommand()) return;
+  const { commandName } = interaction;
+  if (commandName === "db_test") {
+    const tagName = interaction.options.getString("name");
+    const tagDescription = interaction.options.getString("description");
+
+    try {
+      // equivalent to: INSERT INTO tags (name, description, username) values (...)
+      const tag = await Tags.create({
+        name: tagName,
+        description: tagDescription,
+        username: interaction.user.username,
+      });
+      return interaction.reply(`Tag ${tag.name} added.`);
+    } catch (error) {
+      if (error.name === "SequelizeUniqueConstraintError") {
+        return interaction.reply("that tag already exists.");
+      }
+      console.log(error);
+      return interaction.reply("Something went wrong with adding a tag.");
+    }
+  }
+});
+
 // Get the individual commands from their respective subfolder inside "commands"
 for (const folder of commandFolders) {
   const commandsPath = path.join(foldersPath, folder);
@@ -89,6 +116,9 @@ for (const file of eventFiles) {
   const event = require(filePath);
   if (event.once) {
     client.once(event.name, (...args) => event.execute(...args));
+    if (event.name == Events.ClientReady) {
+      Tags.sync();
+    }
   } else {
     client.on(event.name, (...args) => event.execute(...args));
   }
