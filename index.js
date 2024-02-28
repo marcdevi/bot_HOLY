@@ -3,22 +3,47 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const { token } = require("./config.json");
+const Sequelize = require("sequelize");
+
+//connexion DB
+const sequelize = new Sequelize("database", "user", "passworrd", {
+  host: "localhost",
+  dialect: "sqlite",
+  logging: false,
+  // SQLite only
+  storage: "database.sqlite",
+});
+
+//creation table tags
+const Tags = sequelize.define("tags", {
+  name: {
+    type: Sequelize.STRING,
+    unique: true,
+  },
+  description: Sequelize.TEXT,
+  username: Sequelize.STRING,
+  usage_count: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+    allowNull: false,
+  },
+});
 
 // Create a new client to run the bot
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent
-  ]
+    GatewayIntentBits.MessageContent,
+  ],
 });
 
 const triggerWords = ["Nicolas", "Nico", "Triau"];
 
-client.on("messageCreate", message => {
+client.on("messageCreate", (message) => {
   if (message.author.bot) return false;
 
-  triggerWords.forEach(word => {
+  triggerWords.forEach((word) => {
     if (message.content.includes(word)) {
       message.reply("Est un déchet");
     }
@@ -39,7 +64,7 @@ for (const folder of commandFolders) {
   const commandsPath = path.join(foldersPath, folder);
   const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter(file => file.endsWith(".js"));
+    .filter((file) => file.endsWith(".js"));
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
@@ -57,7 +82,7 @@ for (const folder of commandFolders) {
 const eventsPath = path.join(__dirname, "events");
 const eventFiles = fs
   .readdirSync(eventsPath)
-  .filter(file => file.endsWith(".js"));
+  .filter((file) => file.endsWith(".js"));
 
 for (const file of eventFiles) {
   const filePath = path.join(eventsPath, file);

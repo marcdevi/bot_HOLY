@@ -2,7 +2,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("ADD DB TEST")
+    .setName("db_test")
     .setDescription("Ajouter un élément a la base de données")
     .addStringOption((option) =>
       option
