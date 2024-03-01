@@ -1,10 +1,10 @@
-# Bender Bot
+# bot_HOLY
 
-Discord Bot used as a template to learn NodeJs
+Discord Bot used for stocking all favorite music in a list then you can searching for it on youtube
 
 ## How to install
 
-- git clone https://github.com/SteakBarbare/Bender-Bot
+- git clone https://github.com/marcdevi/bot_HOLY
 
 > When it is done, create a config file in the base directory with these fields inside:
 >
@@ -24,3 +24,13 @@ Discord Bot used as a template to learn NodeJs
 
 - Commands folder -> Create new commands inside subfolders, each must have a data & execute
 - Events folder -> You can add new events here, no need for subfolders
+
+## Possible commands on the bot 
+- /song_search : params -> song (song title) 
+                 description -> get song video on youtube by song title
+-/add_music    : params -> title, artist, mood (how you feel)
+                 description -> stock user favorit song on the bot 
+-/list_music   : params -> None
+                 description -> Get all user liste of favorit song
+-/user_info    : params -> None
+                 description -> Get all informations about the user connected

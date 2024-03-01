@@ -7,7 +7,6 @@ const sequelize = new Sequelize("database", "username", "password", {
   storage: "database.sqlite",
 });
 
-const Tags = require("./models/tags.js")(sequelize, Sequelize.DataTypes);
 const Music = require("./models/music.js")(sequelize, Sequelize.DataTypes);
 
-module.exports = { Tags, Music };
+module.exports = { Music };
