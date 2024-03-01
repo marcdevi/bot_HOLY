@@ -4,10 +4,11 @@ const sequelize = new Sequelize("database", "username", "password", {
   host: "localhost",
   dialect: "sqlite",
   logging: false,
-  storage: "database.sqlite"
+  storage: "database.sqlite",
 });
 
 require("./models/tags.js")(sequelize, Sequelize.DataTypes);
+require("./models/music.js")(sequelize, Sequelize.DataTypes);
 
 const force = process.argv.includes("--force") || process.argv.includes("-f");
 

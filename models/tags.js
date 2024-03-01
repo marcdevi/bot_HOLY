@@ -6,18 +6,18 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: {
         type: Sequelize.STRING,
-        unique: true
+        unique: true,
       },
       description: Sequelize.TEXT,
       username: Sequelize.STRING,
       usage_count: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     },
     {
-      timestamps: false
+      timestamps: false,
     }
   );
 };
