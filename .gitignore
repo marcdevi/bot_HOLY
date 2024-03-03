@@ -86,6 +86,7 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+database.sqlite
 
 # Config Token
 config.json
