@@ -1,7 +1,7 @@
 // Import required packages & token
 const fs = require("node:fs");
 const path = require("node:path");
-const { Client, Collection, GatewayIntentBits } = require("discord.js");
+const { Client, Collection, GatewayIntentBits, Events } = require("discord.js");
 const { token } = require("./config.json");
 
 // Create a new client to run the bot
@@ -11,22 +11,6 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent
   ]
-});
-
-const triggerWords = ["Nicolas", "Nico", "Triau"];
-
-client.on("messageCreate", message => {
-  if (message.author.bot) return false;
-
-  triggerWords.forEach(word => {
-    if (message.content.includes(word)) {
-      message.reply("Est un déchet");
-    }
-  });
-
-  if (message.author.id == 142335378064408585) {
-    message.reply("Ta gueule");
-  }
 });
 
 // Create a command collection
