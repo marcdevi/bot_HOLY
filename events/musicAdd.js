@@ -14,8 +14,7 @@ module.exports = {
       const musicMood = interaction.options.getString("mood");
 
       try {
-        // equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
-        console.log();
+   
         const music = await Music.create({
           title: musicTitle,
           artist: musicArtist,
@@ -28,7 +27,6 @@ module.exports = {
           return interaction.reply("That music already exists.");
         }
 
-        console.log(error);
         return interaction.reply("Something went wrong with adding a Music.");
       }
     }

@@ -3,13 +3,16 @@ const { Music } = require("../dbObjects.js");
 
 module.exports = {
   name: Events.InteractionCreate,
+   // Asynchronous function to execute when the event occurs
   async execute(interaction) {
     if (!interaction.isChatInputCommand()) return;
 
+      // Extract the command name from the interaction
     const { commandName } = interaction;
 
     if (commandName === "list_music") {
-      // equivalent to: SELECT * FROM tags;
+    
+       // Retrieve the list of music from the database
       const musicList = await Music.findAll({
         attributes: ["title", "artist"],
       });
